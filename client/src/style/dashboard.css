@@ -1,0 +1,44 @@
+
+
+.dashboard-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--dashboard-bg);
+    color: var(--dashboard-text);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+    .dashboard-container h2 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-container p {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+    }
+
+.dashboard-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+    .dashboard-actions button {
+        padding: 12px 20px;
+        font-size: 1rem;
+        background-color: var(--dashboard-btn-bg);
+        color: var(--dashboard-btn-text);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+        .dashboard-actions button:hover {
+            background-color: var(--dashboard-btn-hover);
+        }

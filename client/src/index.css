@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+/* Light mode (default) */
+:root {
+    --bg-color: #f9f9f9;
+    --text-color: #1f1f1f;
+    --card-bg: #ffffff;
+    --link-color: #000;
+    --primary-color: #3b82f6;
+    --primary-hover-color: #2563eb;
+    --button-text-color: #ffffff;
+    --chat-bg: #fff;
+    --chat-text: #1f1f1f;
+    --chat-input-bg: #fff;
+    --chat-input-border: #ccc;
+    --chat-link: #007bff;
+    --chat-toggle-bg: #007bff;
+    --chat-toggle-hover: #0056b3;
+}
+
+/* Dark mode */
+body.dark-mode {
+    --bg-color: #1f1f1f;
+    --text-color: #f9f9f9;
+    --card-bg: #2e2c2c;
+    --link-color: #fff;
+    --primary-color: #3b82f6;
+    --primary-hover-color: #2563eb;
+    --button-text-color: #ffffff;
+    --chat-bg: #2a2a2a;
+    --chat-text: #f9f9f9;
+    --chat-input-bg: #1f1f1f;
+    --chat-input-border: #555;
+    --chat-link: #66b2ff;
+    --chat-toggle-bg: #3399ff;
+    --chat-toggle-hover: #227acc;
+}
+
+/* Globalna primena boja */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}

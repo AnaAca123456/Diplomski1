@@ -1,0 +1,86 @@
+:root {
+    --admin-bg: #f9f9f9;
+    --admin-text: #1f1f1f;
+    --admin-card-bg: #fff;
+    --admin-border: #ddd;
+    --admin-header-bg: #f0f0f0;
+    --admin-hover-bg: #f9f9f9;
+    --admin-delete: #cc0000;
+    --admin-delete-hover: #a30000;
+}
+
+body.dark-mode {
+    --admin-bg: #1e1e1e;
+    --admin-text: #f1f1f1;
+    --admin-card-bg: #2a2a2a;
+    --admin-border: #444;
+    --admin-header-bg: #333;
+    --admin-hover-bg: #2f2f2f;
+    --admin-delete: #ff4d4d;
+    --admin-delete-hover: #cc0000;
+}
+
+.admin-panel {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--admin-bg);
+    color: var(--admin-text);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+    .admin-panel h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+.admin-section {
+    margin-bottom: 40px;
+}
+
+    .admin-section h3 {
+        margin-bottom: 15px;
+        color: var(--admin-text);
+    }
+
+    .admin-section table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: var(--admin-card-bg);
+        border: 1px solid var(--admin-border);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .admin-section th,
+    .admin-section td {
+        padding: 12px 15px;
+        border-bottom: 1px solid var(--admin-border);
+        text-align: left;
+        color: var(--admin-text);
+    }
+
+    .admin-section th {
+        background-color: var(--admin-header-bg);
+        font-weight: bold;
+    }
+
+    .admin-section tr:hover {
+        background-color: var(--admin-hover-bg);
+    }
+
+    .admin-section button {
+        background-color: var(--admin-delete);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .admin-section button:hover {
+            background-color: var(--admin-delete-hover);
+        }

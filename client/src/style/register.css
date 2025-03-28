@@ -1,0 +1,61 @@
+.register-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--bg-color, #f8f8f8);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: var(--text-color, #1f1f1f);
+}
+
+.register-form input,
+.register-form textarea,
+.register-form label {
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: var(--input-bg, #fff);
+    color: var(--text-color, #1f1f1f);
+}
+
+    .register-form input::placeholder,
+    .register-form textarea::placeholder {
+        color: #999;
+    }
+
+    .register-form input[type="radio"] {
+        width: auto;
+        margin-right: 8px;
+        accent-color: var(--primary-color, #3b82f6);
+    }
+
+.role-radio label {
+    margin-right: 20px;
+    display: inline-block;
+    color: var(--text-color);
+}
+
+button[type="submit"] {
+    background-color: var(--primary-color, #333);
+    color: var(--button-text-color, #fff);
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    button[type="submit"]:hover {
+        background-color: var(--primary-hover-color, #555);
+    }
+
+.error-msg {
+    color: red;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}

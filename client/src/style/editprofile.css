@@ -1,0 +1,67 @@
+
+
+.edit-profile-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--profile-bg);
+    color: var(--profile-text);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    .edit-profile-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: var(--profile-text);
+    }
+
+.edit-profile-form {
+    display: flex;
+    flex-direction: column;
+}
+
+    .edit-profile-form input,
+    .edit-profile-form textarea {
+        padding: 10px;
+        margin-bottom: 15px;
+        background-color: var(--input-bg);
+        color: var(--profile-text);
+        border: 1px solid var(--input-border);
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border 0.3s ease, background-color 0.3s ease;
+    }
+
+        .edit-profile-form input:focus,
+        .edit-profile-form textarea:focus {
+            border-color: var(--input-focus);
+            outline: none;
+        }
+
+    .edit-profile-form button {
+        padding: 12px;
+        background-color: var(--btn-bg);
+        color: var(--btn-text);
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+        .edit-profile-form button:hover {
+            background-color: var(--btn-hover);
+        }
+
+.error-msg {
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.success-msg {
+    color: green;
+    margin-bottom: 10px;
+    text-align: center;
+}

@@ -1,0 +1,234 @@
+﻿
+.post-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    color: var(--text-color);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    color: var(--text-muted, #555);
+}
+
+.post-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.post-description {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.view-details {
+    text-decoration: none;
+    background-color: var(--btn-bg, #333);
+    color: var(--btn-text, #fff);
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+    .view-details:hover {
+        background-color: var(--btn-hover, #444);
+    }
+
+.post-info span {
+    margin-left: 12px;
+    font-size: 0.95rem;
+}
+
+.legal-status {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+    .legal-status.legal {
+        background-color: #e6ffed;
+        color: green;
+    }
+
+    .legal-status.illegal {
+        background-color: #ffeaea;
+        color: red;
+    }
+
+    .legal-status.neutral {
+        background-color: #eee;
+        color: #555;
+    }
+
+.like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    color: var(--text-color);
+}
+
+    .like-button.liked {
+        color: royalblue;
+    }
+
+.comment-section {
+    margin-top: 30px;
+    border-top: 1px solid var(--border-color, #ccc);
+    padding-top: 20px;
+}
+
+    .comment-section h4 {
+        margin-bottom: 15px;
+    }
+
+.comment-item {
+    margin-bottom: 12px;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+    .comment-author:hover {
+        text-decoration: underline;
+    }
+
+.comment-form textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #ccc);
+    margin-bottom: 10px;
+    resize: vertical;
+    background: var(--card-bg, #fff);
+    color: var(--text-color);
+}
+
+.comment-form button {
+    padding: 8px 16px;
+    background-color: var(--btn-bg, #333);
+    color: var(--btn-text, #fff);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.comment-date {
+    font-size: 0.8rem;
+    color: var(--text-muted, #777);
+}
+
+.view-post {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--card-bg, #fff);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    color: var(--text-color);
+}
+
+    .view-post h2 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+.post-details p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.search-input {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 6px;
+    max-width: 300px;
+    background: var(--card-bg, #fff);
+    color: var(--text-color);
+}
+
+.back-button {
+    margin-top: 20px;
+    padding: 10px 16px;
+    background-color: #f3f3f3;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+    .back-button:hover {
+        background-color: #ddd;
+    }
+
+.search-and-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+
+
+.filter-options {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+    flex-wrap: wrap;
+}
+.post-author {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+    .post-author:hover {
+        text-decoration: underline;
+    }
+.edit-post-btn {
+    background-color: #ffaa00;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+    display: inline-block;
+    transition: 0.3s ease;
+}
+
+    .edit-post-btn:hover {
+        background-color: #ff9900;
+    }
+.posts-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
