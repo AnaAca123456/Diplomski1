@@ -1,6 +1,8 @@
 ﻿import User from "../models/User.js";
 import Post from "../models/Post.js";
 import Comment from "../models/Comment.js";
+import bcrypt from "bcryptjs";
+
 
 export const getAllUsers = async (req, res) => {
     try {
@@ -25,8 +27,17 @@ export const deleteUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
+    console.log("✉️ Podaci koji dolaze:", req.body);
     try {
-        const updated = await User.findByIdAndUpdate(req.params.id, req.body, {
+        const updateData = { ...req.body };
+
+        if (updateData.password) {
+            console.log(" Hešujem lozinku:", updateData.password);
+            const salt = await bcrypt.genSalt(10);
+            updateData.password = await bcrypt.hash(updateData.password, salt);
+        }
+
+        const updated = await User.findByIdAndUpdate(req.params.id, updateData, {
             new: true,
         }).select("-password");
 
@@ -36,9 +47,11 @@ export const updateUser = async (req, res) => {
 
         res.status(200).json(updated);
     } catch (err) {
+        console.error("❌ Greška:", err);
         res.status(500).json({ message: "Greška pri ažuriranju korisnika." });
     }
 };
+
 
 export const getAllPosts = async (req, res) => {
     try {
@@ -89,5 +102,22 @@ export const deleteCommentById = async (req, res) => {
         res.status(200).json({ message: "Komentar obrisan." });
     } catch (err) {
         res.status(500).json({ message: "Greška prilikom brisanja komentara." });
+    }
+};
+export const updateAnyComment = async (req, res) => {
+    try {
+        const updated = await Comment.findByIdAndUpdate(
+            req.params.id,
+            { text: req.body.text },
+            { new: true }
+        ).populate("author", "firstName lastName");
+
+        if (!updated) {
+            return res.status(404).json({ message: "Komentar nije pronađen." });
+        }
+
+        res.status(200).json(updated);
+    } catch (err) {
+        res.status(500).json({ message: "Greška pri izmeni komentara." });
     }
 };

@@ -29,13 +29,24 @@ export const addComment = async (req, res) => {
         });
 
         if (post.author.toString() !== userId.toString()) {
-            await Notification.create({
+            const alreadyCommented = await Notification.findOne({
                 recipient: post.author,
                 sender: userId,
-                type: "comment",
                 post: postId,
+                type: "comment",
+                text: text,
             });
+
+            if (!alreadyCommented) {
+                await Notification.create({
+                    recipient: post.author,
+                    sender: userId,
+                    type: "comment",
+                    post: postId,
+                });
+            }
         }
+
 
         res.status(201).json({ comment });
     } catch (err) {

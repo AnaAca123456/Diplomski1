@@ -18,12 +18,21 @@ export const toggleLike = async (req, res) => {
             await Post.findByIdAndUpdate(postId, { $push: { likes: userId } });
 
             if (post.author.toString() !== userId.toString()) {
-                await Notification.create({
+                const alreadyNotified = await Notification.findOne({
                     recipient: post.author,
                     sender: userId,
-                    type: "like",
                     post: post._id,
+                    type: "like",
                 });
+
+                if (!alreadyNotified) {
+                    await Notification.create({
+                        recipient: post.author,
+                        sender: userId,
+                        type: "like",
+                        post: post._id,
+                    });
+                }
             }
 
             return res.status(201).json({ message: "Post lajkovan." });

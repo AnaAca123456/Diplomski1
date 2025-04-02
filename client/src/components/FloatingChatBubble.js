@@ -9,26 +9,36 @@ const FloatingChatBubble = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [conversations, setConversations] = useState([]);
     const [search, setSearch] = useState("");
+    const [unreadCount, setUnreadCount] = useState(0);
+
 
     useEffect(() => {
-        if (!isOpen) return;
-        const fetchConversations = async () => {
+        const fetchData = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/messages/conversations", {
+                if (isOpen) {
+                    const res = await axios.get("http://localhost:5000/api/messages/conversations", {
+                        withCredentials: true,
+                    });
+                    setConversations(res.data);
+                }
+
+                const notifRes = await axios.get("http://localhost:5000/api/notifications", {
                     withCredentials: true,
                 });
-                setConversations(res.data);
+
+                const unreadMessages = notifRes.data.filter(n => n.type === "message" && !n.isRead).length;
+                setUnreadCount(unreadMessages);
             } catch (err) {
-                console.error("Greška u pristupu razgovora:", err);
+                console.error("Greška u pristupu razgovora ili notifikacijama:", err);
             }
         };
-        fetchConversations();
+
+        fetchData();
     }, [isOpen]);
 
     const filteredConversations = conversations.filter((c) =>
         `${c.firstName} ${c.lastName}`.toLowerCase().includes(search.toLowerCase())
     );
-
     return (
         <div className="chat-bubble-container">
             <div className={`chat-bubble-panel ${isOpen ? "open" : ""}`}>
@@ -60,7 +70,11 @@ const FloatingChatBubble = () => {
 
             <button className="chat-bubble-toggle" onClick={() => setIsOpen(!isOpen)}>
                 💬
+                {unreadCount > 0 && (
+                    <span className="notif-badge">{unreadCount}</span>
+                )}
             </button>
+
         </div>
     );
 };

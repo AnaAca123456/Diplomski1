@@ -84,3 +84,73 @@ body.dark-mode {
         .admin-section button:hover {
             background-color: var(--admin-delete-hover);
         }
+.admin-edit-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-row {
+    margin-bottom: 15px;
+}
+
+    .form-row label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #333;
+    }
+
+    .form-row input,
+    .form-row textarea {
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        background-color: #fff;
+        color: #222;
+    }
+
+textarea {
+    resize: vertical;
+    height: 80px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s ease-in-out;
+}
+
+    .save-btn:hover {
+        background-color: #218838;
+    }
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+    .cancel-btn:hover {
+        background-color: #c82333;
+    }

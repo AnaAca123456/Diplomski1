@@ -1,65 +1,101 @@
-
-.notifications-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem 2rem;
-    background-color: var(--bg-color, #fff);
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+﻿.notifications-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    color: #222;
 }
 
     .notifications-container h2 {
-        margin-bottom: 1rem;
-        color: var(--text-color, #333);
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
     }
 
-    .notifications-container button {
-        background-color: var(--primary-color, #007bff);
-        color: var(--button-text-color, #fff);
-        padding: 0.4rem 1rem;
+.notification-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+    .notification-tabs button {
+        padding: 8px 16px;
+        background-color: #f0f0f0;
         border: none;
         border-radius: 8px;
-        margin-bottom: 1rem;
         cursor: pointer;
-        transition: background 0.3s ease;
+        font-weight: 500;
+        transition: background 0.2s ease;
     }
 
-        .notifications-container button:hover {
-            background-color: var(--primary-hover-color, #0056b3);
+        .notification-tabs button:hover {
+            background-color: #e0e0e0;
         }
 
-    .notifications-container ul {
-        list-style: none;
-        padding: 0;
+    .notification-tabs .active {
+        background-color: #007bff;
+        color: white;
     }
 
-    .notifications-container li {
-        background-color: var(--card-bg, #f5f5f5);
-        border-radius: 8px;
-        margin-bottom: 0.6rem;
-        padding: 0.8rem 1rem;
-        transition: background 0.3s ease;
-        color: var(--text-color, #222);
+.notifications-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notifications-container li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    transition: background 0.3s ease;
+}
+
+    .notifications-container li.unread {
+        background-color: #e3f2fd;
+        border-left: 4px solid #2196f3;
     }
 
-        .notifications-container li:hover {
-            background-color: var(--card-hover-bg, #e1eaff);
-        }
-
-        .notifications-container li.unread {
-            background-color: var(--unread-bg, #dff0ff);
-        }
-
-    .notifications-container p {
+    .notifications-container li p {
         margin: 0;
-        color: var(--text-color, #222);
+        font-size: 1rem;
+        flex-grow: 1;
     }
 
-    .notifications-container a {
-        color: var(--link-color, #007bff);
+    .notifications-container li a {
         text-decoration: none;
+        color: #888;
+        font-weight: 400;
+        transition: color 0.2s;
     }
 
-        .notifications-container a:hover {
-            text-decoration: underline;
-        }
+    .notifications-container li.unread a {
+        color: #0056b3;
+        font-weight: 600;
+    }
+
+    .notifications-container li a:hover {
+        text-decoration: underline;
+        color: #333;
+    }
+
+    .notifications-container li p strong {
+        color: #111;
+    }
+.notif-badge {
+    background-color: #ff4757;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 6px;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
+}

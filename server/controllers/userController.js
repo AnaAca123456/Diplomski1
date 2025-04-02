@@ -1,8 +1,6 @@
 ﻿import User from "../models/User.js";
 import Post from "../models/Post.js";
 import bcrypt from "bcryptjs";
-import path from "path";
-import fs from "fs";
 
 export const getUserById = async (req, res) => {
     try {
@@ -28,39 +26,27 @@ export const getAllUsers = async (req, res) => {
 
 export const updateUserProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.userId);
         if (!user) return res.status(404).json({ message: "Korisnik nije pronađen." });
 
-        const { firstName, lastName, phone, bio, password, confirmPassword } = req.body;
+        user.firstName = req.body.firstName || user.firstName;
+        user.lastName = req.body.lastName || user.lastName;
+        user.phone = req.body.phone || user.phone;
+        user.bio = req.body.bio || user.bio;
 
-        if (password && password !== confirmPassword) {
-            return res.status(400).json({ message: "Šifre se ne poklapaju." });
+        if (req.body.password) {
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(req.body.password, salt);
         }
 
         if (req.file) {
-
-            if (user.photo) {
-                const oldPath = path.join("uploads", user.photo);
-                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-            }
             user.photo = req.file.filename;
         }
 
-        user.firstName = firstName || user.firstName;
-        user.lastName = lastName || user.lastName;
-        user.phone = phone || user.phone;
-        user.bio = bio || user.bio;
-
-        if (password) {
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(password, salt);
-        }
-
-        await user.save();
-
-        res.status(200).json({ message: "Profil ažuriran.", user });
+        const updatedUser = await user.save();
+        res.status(200).json({ updatedUser });
     } catch (err) {
-        console.error("Greška pri ažuriranju profila:", err);
-        res.status(500).json({ message: "Greška pri ažuriranju profila." });
+        console.error("❌ Greška pri ažuriranju profila:", err);
+        res.status(500).json({ message: "Greška na serveru." });
     }
 };

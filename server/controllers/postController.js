@@ -183,7 +183,10 @@ export const ratePost = async (req, res) => {
         const post = await Post.findById(req.params.id);
         if (!post) return res.status(404).json({ message: "Post ne postoji." });
 
-        post.ratings = post.ratings.filter(r => r.user.toString() !== req.userId.toString());
+        const alreadyRated = post.ratings.some(r => r.user.toString() === req.userId.toString());
+        if (alreadyRated) {
+            return res.status(400).json({ message: "Već ste ocenili ovaj post." });
+        }
 
         post.ratings.push({ user: req.userId, value });
         await post.save();
@@ -194,4 +197,5 @@ export const ratePost = async (req, res) => {
         res.status(500).json({ message: "Greška na serveru." });
     }
 };
+
 

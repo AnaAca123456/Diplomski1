@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import "./../style/navbar.css";
@@ -7,7 +7,14 @@ import "./../style/navbar.css";
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
     const [notificationCount, setNotificationCount] = useState(0);
+
+    const showBackButton =
+        location.pathname !== "/" &&
+        location.pathname !== "/dashboard" &&
+        location.pathname !== "/login" &&
+        location.pathname !== "/register";
 
     const handleLogout = () => {
         logout();
@@ -29,35 +36,68 @@ const Navbar = () => {
         };
 
         if (user) {
-            fetchNotifications(); 
-            interval = setInterval(fetchNotifications, 30000); 
+            fetchNotifications();
+            interval = setInterval(fetchNotifications, 30000);
         }
 
-        return () => clearInterval(interval); 
+        return () => clearInterval(interval);
     }, [user]);
+
+    useEffect(() => {
+        if (location.pathname === "/notifications") {
+            setNotificationCount(0);
+        }
+    }, [location.pathname]);
+
+    const showLink = (path) => location.pathname !== path && location.pathname !== "/dashboard";
+
 
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-         
-
                 <Link to="/">
                     <img
-                        src="/sgg.png"  
+                        src="/sgg.png"
                         alt="StartUp Guide Logo"
                         className="navbar-logo-img"
                     />
                 </Link>
             </div>
+            {showBackButton && (
+                <button className="back-btn" onClick={() => navigate(-1)} title="Nazad">
+                    ←
+                </button>
+            )}
             <ul className="navbar-links">
                 {user ? (
                     <>
                         <li>
-                            <Link to="/dashboard">Početna</Link>
+                            <Link to="/dashboard">🏠 Početna</Link>
                         </li>
                         <li>
-                            <Link to={`/profile/${user._id}`}>Profil</Link>
+                            <Link to={`/profile/${user._id}`}>👤 Profil</Link>
                         </li>
+
+                        {user.role === "korisnik" && (
+                            <>
+                                {showLink("/create-post") && <li><Link to="/create-post">💡 Nova ideja</Link></li>}
+                                {showLink("/my-posts") && <li><Link to="/my-posts">📁 Moje ideje</Link></li>}
+                                {showLink("/posts") && <li><Link to="/posts">🌐 Sve ideje</Link></li>}
+                            </>
+                        )}
+
+                        {user.role === "mentor" && showLink("/posts") && (
+                            <li><Link to="/posts">📚 Sve ideje</Link></li>
+                        )}
+
+                        {user.role === "advokat" && showLink("/posts") && (
+                            <li><Link to="/posts">⚖️ Sve ideje</Link></li>
+                        )}
+
+                        {user.role === "admin" && showLink("/admin") && (
+                            <li><Link to="/admin">🛠️ Admin panel</Link></li>
+                        )}
+
                         <li>
                             <Link to="/notifications" className="nav-icon">
                                 🔔 {notificationCount > 0 && <span className="notif-count">{notificationCount}</span>}
@@ -65,7 +105,7 @@ const Navbar = () => {
                         </li>
                         <li>
                             <button onClick={handleLogout} className="logout-btn">
-                                Odjavi se
+                                🚪 Odjavi se
                             </button>
                         </li>
                         <button className="theme-toggle" onClick={() => {
@@ -74,15 +114,13 @@ const Navbar = () => {
                             🌙 / ☀️
                         </button>
                     </>
-
-                   
                 ) : (
                     <>
                         <li>
-                            <Link to="/login">Prijava</Link>
+                            <Link to="/login">🔐 Prijava</Link>
                         </li>
                         <li>
-                            <Link to="/register">Registracija</Link>
+                            <Link to="/register">📝 Registracija</Link>
                         </li>
                     </>
                 )}

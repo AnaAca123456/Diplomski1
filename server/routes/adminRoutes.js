@@ -7,7 +7,8 @@ import {
     updateUser,
     updatePost,
     getAllComments,
-    deleteCommentById
+    deleteCommentById,
+    updateAnyComment
 } from "../controllers/adminController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { allowRoles } from "../middleware/roleMiddleware.js";
@@ -26,5 +27,8 @@ router.put("/posts/:id", updatePost);
 
 router.get("/comments", protect, allowRoles("admin"), getAllComments);
 router.delete("/comments/:id", protect, allowRoles("admin"), deleteCommentById);
+router.put("/comments/:id", updateAnyComment);
+
+
 
 export default router;

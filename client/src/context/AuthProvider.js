@@ -4,6 +4,7 @@ import axios from "axios";
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true); 
 
     const fetchUser = async () => {
         try {
@@ -13,6 +14,8 @@ const AuthProvider = ({ children }) => {
             setUser(res.data.user);
         } catch (err) {
             setUser(null);
+        } finally {
+            setLoading(false); 
         }
     };
 
@@ -31,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ user, login, logout }}>
-            {children}
+            {!loading && children} 
         </AuthContext.Provider>
     );
 };

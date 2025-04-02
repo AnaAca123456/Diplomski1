@@ -232,3 +232,27 @@
     margin: 0 auto;
     padding: 20px;
 }
+.my-posts-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.no-posts-msg {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-muted, #777);
+}
+
+.post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

@@ -3,17 +3,17 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import CommentSection from "../components/CommentSection";
-import { useNavigate } from "react-router-dom";
 import LikeButton from "../components/LikeButton";
 import LegalStatusLabel from "../components/LegalStatusLabel";
 import "./../style/post.css";
+import { Link } from "react-router-dom"; 
+
 
 const ViewPost = () => {
     const { id } = useParams();
     const { user } = useContext(AuthContext);
     const [post, setPost] = useState(null);
     const [liked, setLiked] = useState(false);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -72,6 +72,8 @@ const ViewPost = () => {
             console.error("Greška kod pravnog statusa:", err);
         }
     };
+    const alreadyRated = post?.ratings?.some(r => r.user === user?._id);
+
 
     const handleRating = async (value) => {
         try {
@@ -100,10 +102,11 @@ const ViewPost = () => {
 
     return (
         <div className="view-post">
-            <button className="back-button" onClick={() => navigate("/posts")}>⬅ Nazad na sve postove</button>
-            <h2>{post.title || post.companyName}</h2>
+           <h2>{post.title || post.companyName}</h2>
             <p className="post-author">
-                Autor: <a href={`/profile/${post.author._id}`}>{post.author.firstName} {post.author.lastName}</a>
+                Autor: <Link to={`/profile/${post.author._id}`}>
+                    {post.author.firstName} {post.author.lastName}
+                </Link>
             </p>
             <LegalStatusLabel status={post.legalStatus} />
 
@@ -139,7 +142,7 @@ const ViewPost = () => {
                     <p><strong>Broj zaposlenih:</strong> {post.employees}</p>
                 </div>
             )}
-            {user?.role === "mentor" && (
+            {user?.role === "mentor" && !alreadyRated && (
                 <div className="rating-section">
                     <p><strong>Ocenite ovaj post:</strong></p>
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -148,6 +151,10 @@ const ViewPost = () => {
                         </button>
                     ))}
                 </div>
+            )}
+
+            {user?.role === "mentor" && alreadyRated && (
+                <p><strong>Već ste ocenili ovaj post.</strong></p>
             )}
 
             <p><strong>⭐ Prosečna ocena:</strong> {averageRating}</p>

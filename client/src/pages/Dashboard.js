@@ -49,7 +49,7 @@ const Dashboard = () => {
 
                 {user.role === "admin" && (
                     <>
-                        <button onClick={goToAdminPanel}>Upravljanje korisnicima i postovima</button>
+                        <button onClick={goToAdminPanel}> Upravljanje korisnicima i postovima </button>
                     </>
                 )}
             </div>

@@ -5,10 +5,11 @@ import { AuthContext } from "../context/AuthContext";
 import "./../style/messages.css";
 
 const Messages = () => {
-    const { id } = useParams(); // primaoc
+    const { id } = useParams(); 
     const { user } = useContext(AuthContext);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+    const [partner, setPartner] = useState(null);
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -22,6 +23,17 @@ const Messages = () => {
                 console.error("Greška pri dohvatanju poruka:", err);
             }
         };
+        const fetchPartner = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/users/${id}`, {
+                    withCredentials: true,
+                });
+                setPartner(res.data.user);
+            } catch (err) {
+                console.error("Greška pri dohvatanju korisnika:", err);
+            }
+        };
+
         const markNotificationsAsRead = async () => {
             try {
                 await axios.put("http://localhost:5000/api/notifications/read", {}, {
@@ -34,6 +46,7 @@ const Messages = () => {
 
 
         fetchMessages();
+        fetchPartner(); 
     }, [id]);
 
     const handleSend = async () => {
@@ -47,7 +60,7 @@ const Messages = () => {
                 },
                 { withCredentials: true }
             );
-            setMessages([...messages, { sender: user._id, text: newMessage }]);
+            setMessages([...messages, { sender: user._id, text: newMessage, createdAt: new Date() }]);
             setNewMessage("");
         } catch (err) {
             console.error("Greška pri slanju poruke:", err);
@@ -56,14 +69,38 @@ const Messages = () => {
 
     return (
         <div className="messages-container">
-            <h2>Privatna poruka</h2>
+            {partner && (
+                <div className="message-partner-info">
+                    <img
+                        src={
+                            partner.photo
+                                ? `http://localhost:5000/uploads/${partner.photo}`
+                                : "/default-user.png"
+                        }
+                        alt={partner.firstName}
+                        className="message-partner-img"
+                    />
+                    <span className="message-partner-name">
+                        {partner.firstName} {partner.lastName}
+                    </span>
+                </div>
+            )}
             <div className="messages-box">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
                         className={msg.sender === user._id ? "message own" : "message"}
                     >
-                        {msg.text}
+                        <div className="message-text">{msg.text}</div>
+                        <div className="message-time">
+                            {new Date(msg.createdAt).toLocaleString("sr-RS", {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            })}
+                        </div>
                     </div>
                 ))}
             </div>

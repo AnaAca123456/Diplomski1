@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import PostCard from "../components/PostCard";
+import "./../style/post.css";
 
 const MyPosts = () => {
     const { user } = useContext(AuthContext);
@@ -24,12 +25,15 @@ const MyPosts = () => {
     }, [user]);
 
     return (
-        <div className="dashboard">
-            <h2>Moji postovi</h2>
+        <div className="my-posts-container">
             {posts.length === 0 ? (
-                <p>Još uvek nemaš nijedan post.</p>
+                <p className="no-posts-msg">Još uvek nemaš nijedan post.</p>
             ) : (
-                    posts.map((post) => <PostCard key={post._id} post={post} showEditButton={true} />)
+                <div className="post-list">
+                    {posts.map((post) => (
+                        <PostCard key={post._id} post={post} showEditButton={true} />
+                    ))}
+                </div>
             )}
         </div>
     );
