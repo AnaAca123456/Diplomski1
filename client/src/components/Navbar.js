@@ -9,6 +9,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [notificationCount, setNotificationCount] = useState(0);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const showBackButton =
         location.pathname !== "/" &&
@@ -54,14 +55,22 @@ const Navbar = () => {
 
     return (
         <nav className="navbar">
-            <div className="navbar-logo">
-                <Link to="/">
-                    <img
-                        src="/sgg.png"
-                        alt="StartUp Guide Logo"
-                        className="navbar-logo-img"
-                    />
-                </Link>
+            <div className="navbar-logo dropdown">
+                <img
+                    src="/sgg.png"
+                    alt="StartUp Guide Logo"
+                    className="navbar-logo-img"
+                    onClick={() => setDropdownOpen(prev => !prev)}
+                    style={{ cursor: "pointer" }}
+                />
+                {dropdownOpen && (
+                    <div className="dropdown-menu">
+                        <a href="https://preduzetnistvo.gov.rs/programi-podrske/" target="_blank" rel="noopener noreferrer"> → Podrška</a>
+                        <a href="https://privreda.gov.rs/aktuelno/vesti-i-saopstenja" target="_blank" rel="noopener noreferrer"> → Vesti</a>
+                        <a href="https://privreda.gov.rs/dokumenta/javne-nabavke" target="_blank" rel="noopener noreferrer"> → Javne nabavke</a>
+                        <a href="https://privreda.gov.rs/usluge/javni-pozivi" target="_blank" rel="noopener noreferrer"> → Javni pozivi</a>
+                    </div>
+                )}
             </div>
             {showBackButton && (
                 <button className="back-btn" onClick={() => navigate(-1)} title="Nazad">
@@ -71,12 +80,17 @@ const Navbar = () => {
             <ul className="navbar-links">
                 {user ? (
                     <>
-                        <li>
-                            <Link to="/dashboard">🏠 Početna</Link>
-                        </li>
-                        <li>
-                            <Link to={`/profile/${user._id}`}>👤 Profil</Link>
-                        </li>
+                        {showLink("/dashboard") && (
+                            <li>
+                                <Link to="/dashboard">🏠 Početna</Link>
+                            </li>
+                        )}
+                        {showLink(`/profile/${user._id}`) && (
+                            <li>
+                                <Link to={`/profile/${user._id}`}>👤 Profil</Link>
+                            </li>
+                        )}
+
 
                         {user.role === "korisnik" && (
                             <>
