@@ -101,6 +101,7 @@ const ViewPost = () => {
             : "Nema ocena";
 
     return (
+        <div className="page-wrapper">
         <div className="view-post">
            <h2>{post.title || post.companyName}</h2>
             <p className="post-author">
@@ -179,6 +180,7 @@ const ViewPost = () => {
             )}
 
            
+            </div>
         </div>
     );
 };

@@ -68,6 +68,7 @@ const Messages = () => {
     };
 
     return (
+        <div className="page-wrapper">
         <div className="messages-container">
             {partner && (
                 <div className="message-partner-info">
@@ -118,6 +119,7 @@ const Messages = () => {
                     Pošalji
                 </button>
 
+            </div>
             </div>
         </div>
     );

@@ -62,6 +62,7 @@ const Register = () => {
     };
 
     return (
+        <div className="page-wrapper">
         <div className="register-container">
             <h2>Registracija</h2>
             <form onSubmit={handleSubmit} className="register-form" encType="multipart/form-data">
@@ -97,6 +98,7 @@ const Register = () => {
 
                 <button type="submit">Registruj se</button>
             </form>
+            </div>
         </div>
     );
 };

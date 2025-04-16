@@ -3,6 +3,9 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import "./../style/admin.css";
+import EditModal from "../components/EditModal";
+import { useNavigate } from "react-router-dom";
+
 
 const AdminPanel = () => {
     const { user } = useContext(AuthContext);
@@ -11,6 +14,7 @@ const AdminPanel = () => {
     const [comments, setComments] = useState([]);
     const [activeTab, setActiveTab] = useState("users");
     const [refresh, setRefresh] = useState(false);
+    const navigate = useNavigate();
 
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editedComment, setEditedComment] = useState("");
@@ -20,6 +24,10 @@ const AdminPanel = () => {
 
     const [editingUserId, setEditingUserId] = useState(null);
     const [newPassword, setNewPassword] = useState("");
+
+    const [isCommentModalOpen, setCommentModalOpen] = useState(false);
+    const [isPostModalOpen, setPostModalOpen] = useState(false);
+
 
     const handlePostInputChange = (e) => {
         const { name, value } = e.target;
@@ -151,7 +159,13 @@ const AdminPanel = () => {
                             </td>
                             <td>
                                 <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                                    <Link to={`/profile/${u._id}`} className="view-link">👁️ Profil</Link>
+                                    <button
+                                        onClick={() => navigate(`/profile/${u._id}`)}
+                                        className="view-btn"
+                                    >
+                                        👁️ Profil
+                                    </button>
+
 
                                     {u._id !== user._id && (
                                         <>
@@ -164,7 +178,11 @@ const AdminPanel = () => {
                                                     }}>❌</button>
                                                 </>
                                             ) : (
-                                                <button onClick={() => setEditingUserId(u._id)}>✏️ Izmeni lozinku</button>
+                                                    <button onClick={() => {
+                                                        setEditingUserId(u._id);
+                                                        setNewPassword("");
+                                                    }}>✏️ Izmeni lozinku</button>
+
                                             )}
 
                                             <button className="delete-btn" onClick={() => deleteUser(u._id)}>🗑️ Obriši</button>
@@ -198,56 +216,7 @@ const AdminPanel = () => {
                 <tbody>
                     {posts.map((p) => (
                         <tr key={p._id}>
-                            {editingPostId === p._id ? (
-                                <>
-                                    <td>
-                                        <input
-                                            value={editedPost.title}
-                                            name="title"
-                                            onChange={handlePostInputChange}
-                                            className="admin-input"
-                                        />
-                                    </td>
-                                    <td>
-                                        <textarea
-                                            value={editedPost.ideaDescription}
-                                            name="ideaDescription"
-                                            onChange={handlePostInputChange}
-                                            className="admin-input"
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            value={editedPost.plannedCosts}
-                                            name="plannedCosts"
-                                            onChange={handlePostInputChange}
-                                            className="admin-input"
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            value={editedPost.timeline}
-                                            name="timeline"
-                                            onChange={handlePostInputChange}
-                                            className="admin-input"
-                                        />
-                                    </td>
-                                    <td>
-                                        <Link to={`/profile/${p.author?._id}`}>
-                                            {p.author?.firstName} {p.author?.lastName}
-                                        </Link>
-                                    </td>
-
-                                    <td>{p.type}</td>
-                                    <td>
-                                        <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                                            <button className="save-btn" onClick={() => updatePost(p._id)}>💾 Sačuvaj</button>
-                                            <button className="cancel-btn" onClick={() => setEditingPostId(null)}>❌Otkaži</button>
-                                        </div>
-                                    </td>
-                                </>
-                            ) : (
-                                <>
+                
                                     <td>{p.title || p.companyName}</td>
                                     <td>{p.ideaDescription?.slice(0, 50)}...</td>
                                     <td>{p.plannedCosts}</td>
@@ -256,21 +225,28 @@ const AdminPanel = () => {
                                     <td>{p.type}</td>
                                     <td>
                                         <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                                            <Link to={`/posts/${p._id}`} className="view-link">👁️ Pregled</Link>
-                                            <button onClick={() => {
-                                                setEditingPostId(p._id);
-                                                setEditedPost({
-                                                    title: p.title || "",
-                                                    ideaDescription: p.ideaDescription || "",
-                                                    plannedCosts: p.plannedCosts || "",
-                                                    timeline: p.timeline || ""
-                                                });
-                                            }}>✏️ Izmeni</button>
-                                            <button onClick={() => deletePost(p._id)}>🗑️ Obriši</button>
-                                        </div>
-                                    </td>
-                                </>
-                            )}
+                                    <button
+                                        onClick={() => navigate(`/posts/${p._id}`)}
+                                        className="view-btn"
+                                    >
+                                        👁️ Pregled
+                                    </button>
+
+                                    <button onClick={() => {
+                                        setEditingPostId(p._id);
+                                        setEditedPost({
+                                            title: p.title || "",
+                                            ideaDescription: p.ideaDescription || "",
+                                            plannedCosts: p.plannedCosts || "",
+                                            timeline: p.timeline || ""
+                                        });
+                                        setPostModalOpen(true);
+                                    }}>
+                                        ✏️ Izmeni
+                                    </button>
+                                    <button onClick={() => deletePost(p._id)}>🗑️ Obriši</button>
+                                </div>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -311,9 +287,20 @@ const AdminPanel = () => {
                                 ) : (
                                         <>
                                             {c.post && (
-                                                <Link to={`/posts/${c.post}`} className="view-link">🔍 Pregled</Link>
+                                                <button
+                                                    onClick={() => navigate(`/posts/${c.post}`)}
+                                                    className="view-btn"
+                                                >
+                                                    🔍 Pregled
+                                                </button>
                                             )}
-                                        <button onClick={() => { setEditingCommentId(c._id); setEditedComment(c.text); }}>✏️ Izmeni</button>
+
+                                            <button onClick={() => {
+                                                setEditingCommentId(c._id);
+                                                setEditedComment(c.text);
+                                                setCommentModalOpen(true);
+                                            }}>✏️ Izmeni</button>
+
                                         <button onClick={() => deleteComment(c._id)}>🗑️ Obriši</button>
                                     </>
                                 )}
@@ -327,6 +314,7 @@ const AdminPanel = () => {
 
 
     return (
+        <div className="page-wrapper">
         <div className="admin-panel">
             <h2>Admin Panel</h2>
 
@@ -338,7 +326,108 @@ const AdminPanel = () => {
 
             {activeTab === "users" && renderUsers()}
             {activeTab === "posts" && renderPosts()}
-            {activeTab === "comments" && renderComments()}
+                {activeTab === "comments" && renderComments()}
+
+                <EditModal isOpen={isCommentModalOpen} onClose={() => setCommentModalOpen(false)}>
+                    <h3>Izmena komentara</h3>
+                    <textarea
+                        value={editedComment}
+                        onChange={(e) => setEditedComment(e.target.value)}
+                    />
+                    <div className="form-buttons">
+                        <button
+                            className="save-btn"
+                            onClick={() => {
+                                updateComment(editingCommentId);
+                                setCommentModalOpen(false);
+                            }}
+                        >
+                            💾 Sačuvaj
+                        </button>
+                        <button className="cancel-btn" onClick={() => setCommentModalOpen(false)}>
+                            ❌ Otkaži
+                        </button>
+                    </div>
+                </EditModal>
+                <EditModal isOpen={isPostModalOpen} onClose={() => setPostModalOpen(false)}>
+                    <h3>Izmena posta</h3>
+                    <div className="form-row">
+                        <label>Naziv</label>
+                        <input
+                            name="title"
+                            value={editedPost.title}
+                            onChange={handlePostInputChange}
+                        />
+                    </div>
+                    <div className="form-row">
+                        <label>Opis</label>
+                        <textarea
+                            name="ideaDescription"
+                            value={editedPost.ideaDescription}
+                            onChange={handlePostInputChange}
+                        />
+                    </div>
+                    <div className="form-row">
+                        <label>Planirani troškovi</label>
+                        <input
+                            name="plannedCosts"
+                            value={editedPost.plannedCosts}
+                            onChange={handlePostInputChange}
+                        />
+                    </div>
+                    <div className="form-row">
+                        <label>Rok</label>
+                        <input
+                            name="timeline"
+                            value={editedPost.timeline}
+                            onChange={handlePostInputChange}
+                        />
+                    </div>
+
+                    <div className="form-buttons">
+                        <button
+                            className="save-btn"
+                            onClick={() => {
+                                updatePost(editingPostId);
+                                setPostModalOpen(false);
+                            }}
+                        >
+                            💾 Sačuvaj
+                        </button>
+                        <button className="cancel-btn" onClick={() => setPostModalOpen(false)}>
+                            ❌ Otkaži
+                        </button>
+                    </div>
+                </EditModal>
+                
+                <EditModal isOpen={editingUserId !== null} onClose={() => setEditingUserId(null)}>
+                    <h3>Izmena lozinke</h3>
+                    <div className="form-row">
+                        <label>Nova lozinka</label>
+                        <input
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-buttons">
+                        <button
+                            className="save-btn"
+                            onClick={() => {
+                                updateUserPassword(editingUserId);
+                                setEditingUserId(null);
+                            }}
+                        >
+                            💾 Sačuvaj
+                        </button>
+                        <button className="cancel-btn" onClick={() => setEditingUserId(null)}>
+                            ❌ Otkaži
+                        </button>
+                    </div>
+                </EditModal>
+
+
+            </div>
         </div>
     );
 };

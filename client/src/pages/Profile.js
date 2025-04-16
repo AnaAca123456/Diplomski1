@@ -31,6 +31,7 @@ const Profile = () => {
     if (!user) return <p>Učitavanje profila...</p>;
 
     return (
+        <div className="page-wrapper">
         <div className="profile-container">
             <div className="profile-info">
                 <img
@@ -82,6 +83,7 @@ const Profile = () => {
                             );
                         })
                 )}
+            </div>
             </div>
         </div>
     );

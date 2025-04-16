@@ -2,10 +2,10 @@
     max-width: 900px;
     margin: 3rem auto;
     padding: 2rem;
-    background: #ffffff;
+    background-color: var(--navbar-bg);
+    color: var(--navbar-text);
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    color: #222;
 }
 
     .notifications-container h2 {

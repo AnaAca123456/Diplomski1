@@ -68,6 +68,7 @@ const CreatePost = () => {
     };
 
     return (
+        <div className="page-wrapper">
         <div className="post-form-container">
             <h2>Kreiraj post</h2>
 
@@ -128,6 +129,7 @@ const CreatePost = () => {
                 {error && <p className="error-msg">{error}</p>}
                 <button type="submit">Objavi</button>
             </form>
+            </div>
         </div>
     );
 };

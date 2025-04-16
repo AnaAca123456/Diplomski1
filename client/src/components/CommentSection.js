@@ -13,6 +13,7 @@ const CommentSection = ({ comments, onAddComment, currentUser }) => {
     };
 
     return (
+        <div className="page-wrapper">
         <div className="comment-section">
             <h4>Komentari</h4>
 
@@ -44,6 +45,7 @@ const CommentSection = ({ comments, onAddComment, currentUser }) => {
                     <button type="submit">Dodaj komentar</button>
                 </form>
             )}
+            </div>
         </div>
     );
 };

@@ -52,94 +52,93 @@ const Navbar = () => {
 
     const showLink = (path) => location.pathname !== path && location.pathname !== "/dashboard";
 
-
     return (
-        <nav className="navbar">
-            <div className="navbar-logo dropdown">
-                <img
-                    src="/sgg.png"
-                    alt="StartUp Guide Logo"
-                    className="navbar-logo-img"
-                    onClick={() => setDropdownOpen(prev => !prev)}
-                    style={{ cursor: "pointer" }}
-                />
-                {dropdownOpen && (
-                    <div className="dropdown-menu">
-                        <a href="https://preduzetnistvo.gov.rs/programi-podrske/" target="_blank" rel="noopener noreferrer"> → Podrška</a>
-                        <a href="https://privreda.gov.rs/aktuelno/vesti-i-saopstenja" target="_blank" rel="noopener noreferrer"> → Vesti</a>
-                        <a href="https://privreda.gov.rs/dokumenta/javne-nabavke" target="_blank" rel="noopener noreferrer"> → Javne nabavke</a>
-                        <a href="https://privreda.gov.rs/usluge/javni-pozivi" target="_blank" rel="noopener noreferrer"> → Javni pozivi</a>
+        <div className="page-wrapper">
+            <nav className="navbar">
+                <div className="navbar-logo-wrapper">
+                    <Link to="/dashboard" className="navbar-logo">
+                        <img
+                            src="/s.png"
+                            alt="StartUp Guide Logo"
+                            className="navbar-logo-img"
+                        />
+                    </Link>
+
+                    <div className="navbar-hamburger">
+                        <button onClick={() => setDropdownOpen(prev => !prev)}>☰</button>
+                        {dropdownOpen && (
+                            <div className="navbar-dropdown">
+                                <button onClick={() => window.open("https://preduzetnistvo.gov.rs/programi-podrske/", "_blank")}>→ Podrška</button>
+                                <button onClick={() => window.open("https://privreda.gov.rs/aktuelno/vesti-i-saopstenja", "_blank")}>→ Vesti</button>
+                                <button onClick={() => window.open("https://privreda.gov.rs/dokumenta/javne-nabavke", "_blank")}>→ Javne nabavke</button>
+                                <button onClick={() => window.open("https://privreda.gov.rs/usluge/javni-pozivi", "_blank")}>→ Javni pozivi</button>
+                            </div>
+
+                        )}
                     </div>
+                </div>
+
+                {showBackButton && (
+                    <button className="back-btn" onClick={() => navigate(-1)} title="Nazad">
+                        ←
+                    </button>
                 )}
-            </div>
-            {showBackButton && (
-                <button className="back-btn" onClick={() => navigate(-1)} title="Nazad">
-                    ←
-                </button>
-            )}
-            <ul className="navbar-links">
-                {user ? (
-                    <>
-                        {showLink("/dashboard") && (
+
+                <ul className="navbar-links">
+                    {user ? (
+                        <>
+                            {showLink("/dashboard") && (
+                                <li><Link to="/dashboard">🏠 Početna</Link></li>
+                            )}
+                            {showLink(`/profile/${user._id}`) && (
+                                <li><Link to={`/profile/${user._id}`}>👤 Profil</Link></li>
+                            )}
+
+                            {user.role === "korisnik" && (
+                                <>
+                                    {showLink("/create-post") && <li><Link to="/create-post">💡 Nova ideja</Link></li>}
+                                    {showLink("/my-posts") && <li><Link to="/my-posts">📁 Moje ideje</Link></li>}
+                                    {showLink("/posts") && <li><Link to="/posts">🌐 Sve ideje</Link></li>}
+                                </>
+                            )}
+
+                            {user.role === "mentor" && showLink("/posts") && (
+                                <li><Link to="/posts">📚 Sve ideje</Link></li>
+                            )}
+
+                            {user.role === "advokat" && showLink("/posts") && (
+                                <li><Link to="/posts">⚖️ Sve ideje</Link></li>
+                            )}
+
+                            {user.role === "admin" && showLink("/admin") && (
+                                <li><Link to="/admin">🛠️ Admin panel</Link></li>
+                            )}
+
                             <li>
-                                <Link to="/dashboard">🏠 Početna</Link>
+                                <Link to="/notifications" className="nav-icon">
+                                    🔔 {notificationCount > 0 && <span className="notif-count">{notificationCount}</span>}
+                                </Link>
                             </li>
-                        )}
-                        {showLink(`/profile/${user._id}`) && (
                             <li>
-                                <Link to={`/profile/${user._id}`}>👤 Profil</Link>
+                                <button onClick={handleLogout} className="logout-btn">
+                                    🚪 Odjavi se
+                                </button>
                             </li>
-                        )}
-
-
-                        {user.role === "korisnik" && (
-                            <>
-                                {showLink("/create-post") && <li><Link to="/create-post">💡 Nova ideja</Link></li>}
-                                {showLink("/my-posts") && <li><Link to="/my-posts">📁 Moje ideje</Link></li>}
-                                {showLink("/posts") && <li><Link to="/posts">🌐 Sve ideje</Link></li>}
-                            </>
-                        )}
-
-                        {user.role === "mentor" && showLink("/posts") && (
-                            <li><Link to="/posts">📚 Sve ideje</Link></li>
-                        )}
-
-                        {user.role === "advokat" && showLink("/posts") && (
-                            <li><Link to="/posts">⚖️ Sve ideje</Link></li>
-                        )}
-
-                        {user.role === "admin" && showLink("/admin") && (
-                            <li><Link to="/admin">🛠️ Admin panel</Link></li>
-                        )}
-
-                        <li>
-                            <Link to="/notifications" className="nav-icon">
-                                🔔 {notificationCount > 0 && <span className="notif-count">{notificationCount}</span>}
-                            </Link>
-                        </li>
-                        <li>
-                            <button onClick={handleLogout} className="logout-btn">
-                                🚪 Odjavi se
+                            <button className="theme-toggle" onClick={() => {
+                                document.body.classList.toggle("dark-mode");
+                            }}>
+                                🌙 / ☀️
                             </button>
-                        </li>
-                        <button className="theme-toggle" onClick={() => {
-                            document.body.classList.toggle("dark-mode");
-                        }}>
-                            🌙 / ☀️
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <li>
-                            <Link to="/login">🔐 Prijava</Link>
-                        </li>
-                        <li>
-                            <Link to="/register">📝 Registracija</Link>
-                        </li>
-                    </>
-                )}
-            </ul>
-        </nav>
+                        </>
+                    ) : (
+                        <>
+                            <li><Link to="/login">🔐 Prijava</Link></li>
+                            <li><Link to="/register">📝 Registracija</Link></li>
+                        </>
+                    )}
+                </ul>
+            </nav>
+        </div>
     );
 };
 

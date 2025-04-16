@@ -69,6 +69,7 @@ const EditProfile = () => {
     };
 
     return (
+        <div className="page-wrapper">
         <div className="edit-profile-container">
             <h2>Ažuriraj profil</h2>
             <form onSubmit={handleSubmit} className="edit-profile-form" encType="multipart/form-data">
@@ -105,6 +106,7 @@ const EditProfile = () => {
 
             {message && <p className="message-info">{message}</p>}
             {error && <p className="message-error">{error}</p>}
+            </div>
         </div>
     );
 };

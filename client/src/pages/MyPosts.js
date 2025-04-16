@@ -25,6 +25,7 @@ const MyPosts = () => {
     }, [user]);
 
     return (
+        <div className="page-wrapper">
         <div className="my-posts-container">
             {posts.length === 0 ? (
                 <p className="no-posts-msg">Još uvek nemaš nijedan post.</p>
@@ -35,6 +36,7 @@ const MyPosts = () => {
                     ))}
                 </div>
             )}
+            </div>
         </div>
     );
 };

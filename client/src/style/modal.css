@@ -1,0 +1,93 @@
+:root {
+    --modal-bg: #ffffff;
+    --modal-text: #333;
+    --modal-close: #555;
+    --modal-close-hover: #d00;
+}
+
+body.dark-mode {
+    --modal-bg: #2c2c2c;
+    --modal-text: #f1f1f1;
+    --modal-close: #ccc;
+    --modal-close-hover: #ff4d4d;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+    backdrop-filter: blur(4px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content {
+    background-color: var(--modal-bg);
+    color: var(--modal-text);
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    position: relative;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--modal-close);
+    transition: color 0.2s ease;
+}
+
+    .modal-close:hover {
+        color: var(--modal-close-hover);
+    }
+
+/* Responsivnost */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1.2rem;
+        width: 95%;
+    }
+
+    .modal-close {
+        top: 8px;
+        right: 10px;
+    }
+}

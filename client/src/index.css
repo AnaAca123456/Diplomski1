@@ -60,3 +60,14 @@ body {
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
 }
+.page-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--card-bg, #fff);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+

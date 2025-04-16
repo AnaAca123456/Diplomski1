@@ -106,6 +106,7 @@ const EditPost = () => {
     };
 
     return (
+        <div className="page-wrapper">
         <div className="post-form-container">
             <h2>Izmeni post</h2>
 
@@ -143,6 +144,7 @@ const EditPost = () => {
                 {error && <p className="error-msg">{error}</p>}
                 <button type="submit">Sačuvaj izmene</button>
             </form>
+            </div>
         </div>
     );
 };

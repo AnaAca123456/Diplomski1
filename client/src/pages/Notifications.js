@@ -49,6 +49,7 @@ const Notifications = () => {
         message: notifications.filter(n => n.type === "message" && !n.isRead).length,
     };
     return (
+        <div className="page-wrapper">
         <div className="notifications-container">
             <h2>Obaveštenja</h2>
 
@@ -98,6 +99,7 @@ const Notifications = () => {
                     ))
                 )}
             </ul>
+            </div>
         </div>
     );
 };

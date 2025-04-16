@@ -35,6 +35,7 @@ const AllPosts = () => {
     });
 
     return (
+        <div className="page-wrapper">
         <div className="posts-page">
             <div className="search-and-filter">
                 <input
@@ -90,6 +91,7 @@ const AllPosts = () => {
                     ))}
                 </div>
             )}
+            </div>
         </div>
     );
 };

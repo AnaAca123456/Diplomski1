@@ -4,6 +4,7 @@ import "./../style/profile.css";
 
 const UserCard = ({ user }) => {
     return (
+        <div className="page-wrapper">
         <div className="user-card">
             <img
                 src={user.photo || "/default-user.png"}
@@ -18,6 +19,7 @@ const UserCard = ({ user }) => {
                 </h4>
                 <p>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</p>
                 <p>{user.email}</p>
+            </div>
             </div>
         </div>
     );

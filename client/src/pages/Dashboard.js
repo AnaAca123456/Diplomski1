@@ -22,6 +22,7 @@ const Dashboard = () => {
     const goToAdminPanel = () => navigate("/admin");
 
     return (
+        <div className="page-wrapper">
         <div className="dashboard-container">
             <h2>Dobrodošao/la, {user.firstName}!</h2>
             <p>Uloga: <strong>{user.role.toUpperCase()}</strong></p>
@@ -54,6 +55,7 @@ const Dashboard = () => {
                 )}
             </div>
             <FloatingChatBubble />
+            </div>
         </div>
 
     );

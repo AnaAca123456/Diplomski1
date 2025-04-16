@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import "./../style/chatbubble.css";
+import { useNavigate } from "react-router-dom";
 
 const FloatingChatBubble = () => {
     const { user } = useContext(AuthContext);
@@ -10,7 +10,7 @@ const FloatingChatBubble = () => {
     const [conversations, setConversations] = useState([]);
     const [search, setSearch] = useState("");
     const [unreadCount, setUnreadCount] = useState(0);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,6 +40,7 @@ const FloatingChatBubble = () => {
         `${c.firstName} ${c.lastName}`.toLowerCase().includes(search.toLowerCase())
     );
     return (
+        <div className="page-wrapper">
         <div className="chat-bubble-container">
             <div className={`chat-bubble-panel ${isOpen ? "open" : ""}`}>
                 <h3>Poruke</h3>
@@ -58,9 +59,16 @@ const FloatingChatBubble = () => {
                         ) : (
                             filteredConversations.map((conv) => (
                                 <li key={conv._id}>
-                                    <Link to={`/messages/${conv._id}`} onClick={() => setIsOpen(false)}>
+                                    <button
+                                        onClick={() => {
+                                            navigate(`/messages/${conv._id}`);
+                                            setIsOpen(false);
+                                        }}
+                                        className="btn-conv"
+                                    >
                                         {conv.firstName} {conv.lastName}
-                                    </Link>
+                                    </button>
+
                                 </li>
                             ))
                         )}
@@ -75,6 +83,7 @@ const FloatingChatBubble = () => {
                 )}
             </button>
 
+            </div>
         </div>
     );
 };

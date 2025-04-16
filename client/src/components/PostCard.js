@@ -13,7 +13,9 @@ const PostCard = ({ post, showEditButton = false }) => {
     const handleCardClick = () => {
         navigate(`/posts/${post._id}`);
     };
+   
     return (
+        <div className="page-wrapper">
         <div className="post-card clickable" onClick={handleCardClick}>
             <div className="post-header">
                 <Link
@@ -47,6 +49,7 @@ const PostCard = ({ post, showEditButton = false }) => {
                         ✏️ Izmeni
                     </Link>
                 )}
+            </div>
             </div>
         </div>
     );
